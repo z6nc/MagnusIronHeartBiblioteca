@@ -1,0 +1,39 @@
+---
+// Genera una página por cada categoría de src/data/commands.ts
+import Layout from '../layouts/Layout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import CommandCard from '../components/CommandCard.astro';
+import CommandRow from '../components/CommandRow.astro';
+import { categories, getCommandsByCategory } from '../data/commands';
+
+export function getStaticPaths() {
+  return categories.map((category) => ({ params: { categoria: category.slug }, props: { category } }));
+}
+
+const { category } = Astro.props;
+const items = getCommandsByCategory(category.slug);
+const themed = Boolean(category.tone);
+const toneClass = category.tone === 'cyan' ? 'tone-cyan' : category.tone === 'green' ? 'tone-green' : '';
+---
+<Layout title={category.title} description={`${category.description} Biblioteca de comandos para soporte TI.`}>
+  <div class={toneClass}>
+    <section class="page-intro relative overflow-hidden border-b border-line">
+      <div class="relative mx-auto max-w-6xl px-4 pb-10 pt-10 sm:pb-14 sm:pt-14">
+        <a href="/" class="mb-8 inline-block text-sm text-muted transition-colors hover:text-ink">← Inicio</a>
+        <SectionHeading as="h1" title={category.heading} description={category.description} />
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-4 py-10 sm:py-14">
+      {category.layout === 'rows' ? (
+        <div class="command-list-panel divide-y divide-[rgba(var(--c),0.14)] overflow-hidden rounded-2xl border border-[rgba(var(--c),0.2)] bg-black/30">
+          {items.map((c, i) => <CommandRow command={c} index={i} />)}
+        </div>
+      ) : (
+        <div class="bento-grid bento-command-grid gap-4 md:grid-cols-2">
+          {items.map((c, i) => <CommandCard command={c} themed={themed} showCategory={themed} index={i} />)}
+        </div>
+      )}
+    </section>
+  </div>
+</Layout>

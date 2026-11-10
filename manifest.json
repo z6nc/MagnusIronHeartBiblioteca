@@ -1,0 +1,23 @@
+{
+  "name": "MagnusIronheart Biblioteca de Comandos",
+  "short_name": "MagnusIronheart",
+  "description": "Es una web donde se pueden encontrar todos los comandos recopilados a lo largo de los años de MagnusIronheart, un creador de contenido en YouTube. Esta web sirve como una biblioteca de comandos para que los usuarios puedan acceder a ellos fácilmente.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0b57d0",
+  "icons": [
+    {
+      "src": "/public/Logo192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/public/Logo512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

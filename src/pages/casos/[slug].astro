@@ -1,0 +1,64 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CaseImage from '../../components/CaseImage.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
+import CommandCard from '../../components/CommandCard.astro';
+import { cases, type Case } from '../../data/cases';
+import { commands } from '../../data/commands';
+
+export function getStaticPaths() {
+  return cases.map((item) => ({ params: { slug: item.slug }, props: { item } }));
+}
+
+const { item } = Astro.props as { item: Case };
+const used = (item.commands ?? []).map((id) => commands.find((c) => c.id === id)).filter((c) => !!c);
+const meta = [item.date, ...(item.tags ?? [])].filter(Boolean).join(' · ');
+---
+<Layout title={item.title} description={item.summary}>
+  <article class="mx-auto max-w-3xl px-4 pb-20 pt-10 sm:pt-14">
+    <a href="/casos" class="inline-block text-sm text-muted transition-colors hover:text-ink">← Casos reales</a>
+
+    <header class="reveal mt-8">
+      <p class="font-mono text-xs text-muted">{meta}</p>
+      <h1 class="mt-3 font-display text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl">{item.title}</h1>
+      <p class="mt-4 text-lg leading-relaxed text-muted">{item.summary}</p>
+    </header>
+
+    {item.cover && <CaseImage image={item.cover} class="reveal mt-10" />}
+
+    <section class="story-panel reveal mt-12 rounded-2xl border border-line bg-surface p-5 sm:p-7">
+      <h2 class="font-display text-xl font-semibold tracking-tight">El problema</h2>
+      <p class="mt-3 leading-relaxed text-ink/85">{item.problem}</p>
+    </section>
+
+    <ol class="mt-12 space-y-12 border-l border-line pl-6">
+      {item.story.map((step, i) => (
+        <li class="reveal relative before:absolute before:-left-[calc(1.5rem_+_5.5px)] before:top-2 before:h-2.5 before:w-2.5 before:rounded-full before:bg-accent">
+          <p class="font-mono text-xs text-accent">Paso {i + 1}</p>
+          <h3 class="mt-1 font-display text-2xl font-semibold tracking-tight">{step.title}</h3>
+          <p class="mt-3 whitespace-pre-line leading-relaxed text-ink/85">{step.text}</p>
+          {step.images && step.images.length > 0 && (
+            <div class:list={['mt-5 grid gap-3', step.images.length > 1 && 'sm:grid-cols-2']}>
+              {step.images.map((im) => <CaseImage image={im} />)}
+            </div>
+          )}
+          {step.command && <div class="mt-5"><CodeBlock code={step.command} /></div>}
+        </li>
+      ))}
+    </ol>
+
+    <section class="story-panel tone-green reveal mt-14 rounded-2xl border border-[rgba(var(--c),0.3)] bg-[rgba(var(--c),0.06)] p-5 sm:p-7">
+      <h2 class="font-display text-xl font-semibold tracking-tight text-[rgb(var(--c))]">El resultado</h2>
+      <p class="mt-3 leading-relaxed text-ink/90">{item.result}</p>
+    </section>
+
+    {used.length > 0 && (
+      <section class="mt-16">
+        <h2 class="font-display text-2xl font-semibold tracking-tight">Comandos de este caso</h2>
+        <div class="mt-6 grid gap-4 md:grid-cols-2">
+          {used.map((c, i) => <CommandCard command={c!} showCategory index={i} />)}
+        </div>
+      </section>
+    )}
+  </article>
+</Layout>

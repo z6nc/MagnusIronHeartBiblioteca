@@ -1,0 +1,50 @@
+---
+// Fila tipo "ficha técnica" para la colección "Conocer tu PC"
+import CodeBlock from "./CodeBlock.astro";
+import CommandImages from "./CommandImages.astro";
+import { youtubeUrl, getCategory, type Command } from "../data/commands";
+interface Props {
+  command: Command;
+  index?: number;
+}
+const { command, index = 0 } = Astro.props;
+const cat = getCategory(command.category);
+---
+
+<article
+  id={command.id}
+  style={`--i:${index}`}
+  class="command-row reveal grid gap-4 p-4 transition-colors hover:bg-[rgba(var(--c),0.05)] sm:p-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-center lg:gap-10"
+>
+  <div>
+    <h3 class="font-display text-lg font-semibold tracking-tight sm:text-xl">
+      {command.name}
+    </h3>
+    <p class="mt-1 text-sm leading-relaxed text-muted">{command.description}</p>
+  </div>
+  <div>
+    <CodeBlock code={command.code} prompt={cat?.prompt} />
+    <div class="mt-2 flex flex-wrap items-center gap-2">
+      <CommandImages images={command.images} commandName={command.name} />
+      <a
+        href={youtubeUrl(command)}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex h-9 items-center gap-2 rounded-lg border border-red-600/20 bg-surface px-3 text-sm text-muted transition-colors hover:bg-red-600/15 hover:text-ink"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="text-[#ff0033]"
+          aria-hidden="true"
+          ><path
+            d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8a2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8c.4-1.6.4-4.8.4-4.8s0-3.2-.4-4.8ZM10 15V9l5.2 3L10 15Z"
+          ></path></svg
+        >
+        Ver en YouTube
+      </a>
+    </div>
+  </div>
+</article>

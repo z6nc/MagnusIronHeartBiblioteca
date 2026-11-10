@@ -1,0 +1,11 @@
+---
+// Imagen por enlace. Si el enlace falla, la figura se oculta sola.
+import type { CaseImg } from '../data/cases';
+interface Props { image: CaseImg; class?: string; }
+const { image, class: className } = Astro.props;
+---
+<figure class:list={['overflow-hidden rounded-xl border border-line bg-surface', className]}>
+  <img src={image.src} alt={image.alt} loading="lazy" decoding="async" referrerpolicy="no-referrer"
+    class="h-auto w-full" onerror="this.parentElement.classList.add('hidden')" />
+  {image.caption && <figcaption class="border-t border-line px-3 py-2 text-xs text-muted">{image.caption}</figcaption>}
+</figure>

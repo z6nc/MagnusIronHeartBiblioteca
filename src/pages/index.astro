@@ -1,0 +1,79 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SearchBox from "../components/SearchBox.astro";
+import { getCommandsByCategory } from "../data/commands";
+
+const top = getCommandsByCategory("mas-usados");
+const typedList = JSON.stringify(top.map((c) => c.code));
+---
+
+<Layout>
+  <section
+    id="hero"
+    data-hero
+    class="relative flex min-h-[calc(100svh-3.5rem)] w-full items-center overflow-hidden"
+  >
+    <div class="hero-inner reveal relative mx-auto">
+      <div class="hero-copy">
+        <p class="hero-kicker">
+          <span aria-hidden="true">&gt;</span> KNOWLEDGE_BASE / SOPORTE TI
+        </p>
+        <h1
+          class="text-[2.5rem] font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl"
+        >
+          MI BIBLIOTECA DE CONOCIMIENTOS PARA <span class="hl">SOPORTE TI</span>
+        </h1>
+        <p
+          class="mt-5 max-w-md text-base leading-relaxed text-muted sm:text-lg"
+        >
+          Apuntes, comandos y soluciones que he recopilado en mis trabajos para
+          <span class="font-medium text-ink">consultar y resolver</span>.
+        </p>
+        <div class="mt-8 max-w-xl"><SearchBox size="lg" /></div>
+        <p
+          class="hero-typed mt-5 h-6 truncate font-mono text-sm text-muted"
+          aria-hidden="true"
+        >
+          <span class="text-accent">$</span>
+          <span class="text-ink"> ipconfig /all</span>
+          <span id="typed" class="caret text-ink" data-list={typedList}></span>
+        </p>
+      </div>
+      <div
+        class="hero-tools"
+        role="group"
+        aria-label="Herramientas de la biblioteca"
+      >
+        <div class="hero-tool hero-tool-cmd">
+          <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <rect x="3.5" y="5.5" width="25" height="21" rx="2"></rect>
+            <path d="M4 11h24M9 16l3 2.5L9 21m7 0h6"></path>
+            <circle cx="8" cy="8.5" r=".7" fill="currentColor" stroke="none"
+            ></circle>
+            <circle cx="11" cy="8.5" r=".7" fill="currentColor" stroke="none"
+            ></circle>
+          </svg>
+          <span>CMD</span>
+        </div>
+        <div class="hero-tool hero-tool-powershell">
+          <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path
+              d="M5.5 5.5h21a2 2 0 0 1 2 2v17a2 2 0 0 1-2 2h-21a2 2 0 0 1-2-2v-17a2 2 0 0 1 2-2Z"
+            ></path>
+            <path d="m9 12 5 4-5 4m8 0h6"></path>
+          </svg>
+          <span>PowerShell</span>
+        </div>
+        <div class="hero-tool hero-tool-docs">
+          <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path
+              d="M9 3.5h9l7 7v17a1 1 0 0 1-1 1H9a2 2 0 0 1-2-2v-21a2 2 0 0 1 2-2Z"
+            ></path>
+            <path d="M18 4v7h7M12 17h10m-10 4h10m-10 4h7"></path>
+          </svg>
+          <span>Documentos</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

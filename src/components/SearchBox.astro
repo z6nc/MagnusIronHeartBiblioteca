@@ -1,0 +1,44 @@
+---
+import { commands, categories } from '../data/commands';
+interface Props { size?: 'sm' | 'lg'; inline?: boolean; }
+const { size = 'sm', inline = false } = Astro.props;
+const index = commands.map((c) => ({
+  id: c.id, name: c.name, code: c.code, cat: c.category,
+  catTitle: categories.find((x) => x.slug === c.category)?.title ?? '',
+}));
+const big = size === 'lg';
+---
+<div class="relative w-full" data-search data-index={JSON.stringify(index)}>
+  <div class={`flex items-center gap-2 rounded-lg border border-line bg-surface focus-within:border-accent transition-colors ${big ? 'px-4 py-3.5' : 'px-3 py-2'}`}>
+    <span class="font-mono text-accent select-none" aria-hidden="true">&gt;</span>
+    <input type="search" autocomplete="off" aria-label="Buscar comandos" placeholder="Buscar comando, atajo o ejecutable…"
+      class={`w-full bg-transparent outline-none placeholder:text-muted font-mono ${big ? 'text-base' : 'text-base sm:text-sm'}`} />
+  </div>
+  <ul class:list={['hidden mt-2 max-h-72 w-full overflow-auto rounded-lg border border-line bg-raised shadow-2xl', !inline && 'absolute z-50']}></ul>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-search]').forEach((root) => {
+    const items: { id: string; name: string; code: string; cat: string; catTitle: string }[] =
+      JSON.parse(root.dataset.index || '[]');
+    const input = root.querySelector('input')!;
+    const list = root.querySelector('ul')!;
+    const esc = (s: string) => s.replace(/[&<>"]/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]!));
+
+    const render = () => {
+      const q = input.value.trim().toLowerCase();
+      if (!q) { list.classList.add('hidden'); return; }
+      const hits = items.filter((i) => `${i.name} ${i.code} ${i.catTitle}`.toLowerCase().includes(q)).slice(0, 8);
+      list.innerHTML = hits.length
+        ? hits.map((h) => `<li><a href="/${h.cat}#${h.id}" class="block px-4 py-2.5 hover:bg-line focus:bg-line">
+            <span class="block text-sm text-ink">${esc(h.name)}</span>
+            <span class="block text-xs text-muted font-mono truncate">${esc(h.catTitle)} · ${esc(h.code)}</span></a></li>`).join('')
+        : '<li class="px-4 py-3 text-sm text-muted">Sin resultados. Prueba con otra palabra.</li>';
+      list.classList.remove('hidden');
+    };
+    input.addEventListener('input', render);
+    input.addEventListener('focus', render);
+    input.addEventListener('keydown', (e) => { if (e.key === 'Escape') list.classList.add('hidden'); });
+    document.addEventListener('click', (e) => { if (!root.contains(e.target as Node)) list.classList.add('hidden'); });
+  });
+</script>

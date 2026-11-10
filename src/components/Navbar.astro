@@ -1,0 +1,54 @@
+---
+import { categories } from "../data/commands";
+
+const links = [
+  { href: "/", label: "Inicio", hint: "Resumen del sitio" },
+  ...categories.map((category) => ({
+    href: `/${category.slug}`,
+    label: category.nav,
+    hint: category.description,
+  })),
+  {
+    href: "/casos",
+    label: "Casos reales",
+    hint: "Problemas resueltos, paso a paso",
+  },
+];
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isActive = (href: string) =>
+  href === "/" ? path === "/" : path === href || path.startsWith(`${href}/`);
+---
+
+<nav id="site-header" class="bg-[#080a0f]" aria-label="Explorar">
+  <p class="explore-nav-label">EXPLORAR</p>
+  <ul>
+    {
+      links.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            aria-current={isActive(link.href) ? "page" : undefined}
+            title={link.hint}
+          >
+            <span class="explore-file-icon" aria-hidden="true">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M3.5 6.5h6l2 2h9v10a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z" />
+                <path d="M3.5 9h17" />
+              </svg>
+            </span>
+            <span class="explore-file-label">{link.label}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

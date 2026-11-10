@@ -1,0 +1,73 @@
+---
+import CodeBlock from "./CodeBlock.astro";
+import CommandImages from "./CommandImages.astro";
+import { youtubeUrl, getCategory, type Command } from "../data/commands";
+interface Props {
+  command: Command;
+  wide?: boolean;
+  showCategory?: boolean;
+  themed?: boolean;
+  index?: number;
+}
+const {
+  command,
+  wide = false,
+  showCategory = false,
+  themed = false,
+  index = 0,
+} = Astro.props;
+const cat = getCategory(command.category);
+---
+
+<article
+  id={command.id}
+  style={`--i:${index}`}
+  class="bg-white/5 border-white/30 border p-5 rounded-xl"
+>
+  <div class="flex items-start justify-between gap-3">
+    <h3
+      class="font-display text-lg font-semibold leading-snug tracking-tight sm:text-xl"
+    >
+      {command.name}
+    </h3>
+    {
+      showCategory && cat && (
+        <a
+          href={`/${cat.slug}`}
+          class="shrink-0 rounded-full border border-line px-2.5 py-0.5 text-xs text-muted hover:text-ink"
+        >
+          {cat.title}
+        </a>
+      )
+    }
+  </div>
+  <p class="mt-1.5 line-clamp-2 text-sm leading-relaxed text-muted">
+    {command.description}
+  </p>
+
+  <div class="mt-auto pt-5">
+    <CodeBlock code={command.code} prompt={cat?.prompt} />
+    <div class="mt-3 flex flex-wrap items-center gap-2">
+      <CommandImages images={command.images} commandName={command.name} />
+      <a
+        href={youtubeUrl(command)}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex h-9 items-center gap-2 rounded-lg border border-line bg-surface px-3 text-sm text-muted transition-colors hover:border-white/25 hover:bg-white/[0.04] hover:text-ink"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="text-[#ff0033]"
+          aria-hidden="true"
+          ><path
+            d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8a2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8c.4-1.6.4-4.8.4-4.8s0-3.2-.4-4.8ZM10 15V9l5.2 3L10 15Z"
+          ></path></svg
+        >
+        Ver en YouTube
+      </a>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,24 @@
+---
+import type { Case } from '../data/cases';
+interface Props { item: Case; index?: number; }
+const { item, index = 0 } = Astro.props;
+const meta = [item.date, ...(item.tags ?? []).slice(0, 2)].filter(Boolean).join(' · ');
+---
+<a href={`/casos/${item.slug}`} style={`--i:${index}`}
+  class="case-card spot reveal group relative grid gap-5 rounded-2xl border border-line bg-surface p-4 hover:border-white/20 sm:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] sm:items-center sm:gap-8 sm:p-5">
+  <div class="relative aspect-video overflow-hidden rounded-xl border border-line bg-black/60">
+    {item.cover
+      ? <img src={item.cover.src} alt={item.cover.alt} loading="lazy" decoding="async" referrerpolicy="no-referrer"
+          class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+      : <div class="case-placeholder flex h-full items-center justify-center font-mono text-3xl text-accent">&gt;_</div>}
+  </div>
+  <div>
+    <p class="font-mono text-xs text-muted">{meta}</p>
+    <h3 class="mt-2 font-display text-xl font-semibold leading-snug tracking-tight sm:text-2xl">{item.title}</h3>
+    <p class="mt-2 line-clamp-2 text-sm leading-relaxed text-muted">{item.summary}</p>
+    <span class="mt-4 inline-flex items-center gap-2 text-sm">
+      Leer el caso
+      <svg class="transition-transform group-hover:translate-x-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+    </span>
+  </div>
+</a>

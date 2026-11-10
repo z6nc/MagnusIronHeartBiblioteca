@@ -1,0 +1,20 @@
+---
+import CopyButton from "./CopyButton.astro";
+interface Props {
+  code: string;
+  prompt?: string;
+}
+const { code, prompt = "" } = Astro.props;
+---
+
+<div
+  class="command-bar code-block font-mono flex flex-col gap-3 rounded-xl border border-line bg-black/60 p-3 min-[460px]:flex-row min-[460px]:items-start"
+>
+  <code
+    class="min-w-0 flex-1 whitespace-pre-wrap font-mono text-[13px] leading-6 text-ink [overflow-wrap:anywhere]"
+    >{prompt && <span class="select-none text-accent">{prompt} </span>}{
+      code
+    }</code
+  >
+  <CopyButton text={code} class="w-full min-[460px]:w-auto" />
+</div>
