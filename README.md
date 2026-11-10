@@ -33,4 +33,7 @@ administrador o modifican la configuración del sistema.
 ## Tecnologías
 
 El sitio está creado con [Astro](https://astro.build/) y [Tailwind CSS](https://tailwindcss.com/).
-# MagnusIronHeartBiblioteca
+
+<img width="1254" height="1254" alt="logo" src="https://github.com/user-attachments/assets/ff657e12-efb2-4193-a113-c8509f596519" />
+
+
