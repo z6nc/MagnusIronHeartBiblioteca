@@ -157,6 +157,13 @@ export const commands: Command[] = [
       '/public/winR/escritorio-remoto.png',
     ]
   },
+    {
+    id: 'exe-power', category: 'win-r', name: 'Ajustes de plan de energia',
+    description: 'Abre el control de ajustes de plan de energia ', code: 'control powercfg.cpl',
+    images: [
+      '/public/winR/escritorio-remoto.png',
+    ]
+  },
   {
     id: 'pc-winver', category: 'win-r', collections: { 'conocer-tu-pc': 2 }, name: 'Versión de Windows',
     description: 'Muestra la edición y la compilación instalada.', code: 'winver', images: [
