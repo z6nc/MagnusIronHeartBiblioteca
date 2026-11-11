@@ -293,7 +293,7 @@ export const commands: Command[] = [
   },
   {
     id: 'pc-ram', category: 'powershell', collections: { 'conocer-tu-pc': 4 }, name: 'Memoria RAM',
-    description: 'Capacidad y velocidad de la memoria.', code: 'Get-CimInstance Win32_PhysicalMemory | Select-Object Capacity, Speed'
+    description: 'Capacidad y velocidad de la memoria.', code: 'Get-CimInstance Win32_PhysicalMemory | Select-Object BankLabel, Manufacturer, PartNumber, Speed, @{Name="Capacity(GB)";Expression={[math]::Round($_.Capacity/1GB, 2)}} | Format-Table -AutoSize'
   },
   {
     id: 'pc-baseboard', category: 'powershell', collections: { 'conocer-tu-pc': 8 }, name: 'Placa base',
