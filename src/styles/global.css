@@ -25,7 +25,7 @@ html {
 body {
   @apply min-h-screen overflow-x-hidden bg-bg font-sans text-ink antialiased;
   font-family: "Archivo", sans-serif;
-  padding-bottom: 112px;
+  padding-bottom: calc(var(--site-header-height, 112px) + 16px);
   background: #050505;
 }
 
@@ -63,11 +63,11 @@ body {
   width: 100%;
   max-width: 1440px;
   align-items: flex-end;
-  justify-content: safe center;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 10px;
-  overflow-x: auto;
+  overflow: visible;
   padding: 8px 3px 4px;
-  scrollbar-width: thin;
 }
 
 #site-header li {
@@ -817,6 +817,13 @@ dialog[data-image-viewer] {
 }
 
 @media (max-width: 767px) {
+  #site-header ul {
+    flex-wrap: nowrap;
+    justify-content: safe center;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
   #hero .hero-inner {
     grid-template-columns: minmax(0, 1fr);
     gap: 30px;

@@ -66,6 +66,16 @@ export const categories: Category[] = [
     heading: 'Comandos de *Regedit*', description: 'Cmdlets para servicios, red y procesos.',
     icon: 'REG', prompt: ''
   },
+  {
+    slug: 'git', title: 'Git', nav: 'Git',
+    heading: 'Comandos de *Git*', description: 'Comandos básicos para trabajar con repositorios y cambios.',
+    icon: 'GIT', prompt: '$'
+  },
+  {
+    slug: 'Web', title: 'Web', nav: 'Web',
+    heading: 'Lista de *Web*', description: 'Lista de webs útiles para soporte TI y administración de sistemas.',
+    icon: 'WEB', prompt: '$'
+  },
 ];
 
 export const commands: Command[] = [
@@ -157,7 +167,7 @@ export const commands: Command[] = [
       '/public/winR/escritorio-remoto.png',
     ]
   },
-    {
+  {
     id: 'exe-power', category: 'win-r', name: 'Ajustes de plan de energia',
     description: 'Abre el control de ajustes de plan de energia ', code: 'control powercfg.cpl',
     images: [
@@ -324,6 +334,24 @@ export const commands: Command[] = [
       '/public/regedit/carpetas-rutas.png',
     ]
   },
+
+  // GIT
+  {
+    id: 'git-pull', category: 'git', name: 'Traer los cambios del repositorio remoto',
+    description: 'Descarga los cambios del repositorio remoto y los fusiona con tu rama local.', code: 'git pull',
+    images: [
+      '/public/git/git-pull.png',
+    ]
+  },
+  // web
+  {
+    id: 'web-lexmark', category: 'Web', name: 'Lexmark Drivers',
+    description: 'Sitio web de soporte para buscar los drivers de impresoras  Lexmark.', code: 'https://support.lexmark.com/es_es/printers.html',
+  },
+
+
+
+
 ];
 
 export const getCategory = (slug: string) => categories.find((c) => c.slug === slug);
