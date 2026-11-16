@@ -6,15 +6,68 @@ import "../styles/global.css";
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  imageAlt?: string;
+  ogType?: "website" | "article";
 }
 const SITE = "MAGNUSIRONHEART";
+const SITE_DESCRIPTION =
+  "Biblioteca de comandos, atajos de Windows y soluciones de soporte técnico en español.";
 const {
   title,
-  description = "Biblioteca personal de conocimientos, comandos y soluciones de soporte TI recopilados a lo largo de distintos trabajos.",
+  description = SITE_DESCRIPTION,
+  image,
+  imageAlt = "Logotipo de MagnusIronHeart",
+  ogType = "website",
 } = Astro.props;
 const fullTitle = title
   ? `${title} | ${SITE}`
   : `${SITE} — Conocimiento de soporte TI`;
+const siteUrl = Astro.site;
+if (!siteUrl) {
+  throw new Error("Configura la propiedad site en astro.config.mjs para generar los metadatos SEO.");
+}
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
+const socialImage = new URL(image ?? "/Logo512.png", siteUrl);
+const structuredDataObject =
+  Astro.url.pathname === "/"
+    ? {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": `${siteUrl.href}#website`,
+        name: SITE,
+        url: siteUrl.href,
+        inLanguage: "es",
+        description: SITE_DESCRIPTION,
+      }
+    : ogType === "article"
+      ? {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: title ?? fullTitle,
+          description,
+          image: socialImage.href,
+          mainEntityOfPage: canonicalUrl.href,
+          inLanguage: "es",
+          isPartOf: { "@id": `${siteUrl.href}#website` },
+        }
+      : {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: fullTitle,
+          description,
+          url: canonicalUrl.href,
+          inLanguage: "es",
+          isPartOf: {
+            "@type": "WebSite",
+            "@id": `${siteUrl.href}#website`,
+            name: SITE,
+          },
+        };
+const structuredData = JSON.stringify(structuredDataObject).replace(
+  /</g,
+  "\\u003c",
+);
 ---
 
 <!doctype html>
@@ -22,32 +75,40 @@ const fullTitle = title
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#0d111a" />
+    <meta name="theme-color" content="#050505" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={Astro.url} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="sitemap" type="application/xml" href={new URL("/sitemap-index.xml", siteUrl)} />
     <link rel="manifest" href="/manifest.json" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:locale" content="es_ES" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:site_name" content={SITE} />
-    <meta name="twitter:card" content="summary" />
-    <link rel="icon" href="/logo16.png" type="image/png" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:alt" content={imageAlt} />
+    {!image && <meta property="og:image:width" content="512" />}
+    {!image && <meta property="og:image:height" content="512" />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/Logo192.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
       rel="stylesheet"
     />
-    <script is:inline>
-      document.documentElement.classList.add("js");
-    </script>
+    <script type="application/ld+json" set:html={structuredData} />
   </head>
   <body id="top" class="min-h-screen flex flex-col">
     <Navbar />

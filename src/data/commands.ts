@@ -76,6 +76,11 @@ export const categories: Category[] = [
     heading: 'Lista de *Web*', description: 'Lista de webs útiles para soporte TI y administración de sistemas.',
     icon: 'WEB', prompt: '$'
   },
+  {
+    slug: 'videos', title: 'Videos de soporte TI', nav: 'Videos',
+    heading: 'Videos de *soporte TI*', description: 'Tutoriales y demostraciones para resolver tareas de soporte técnico.',
+    icon: '▶', prompt: ''
+  },
 ];
 
 export const commands: Command[] = [
@@ -84,14 +89,14 @@ export const commands: Command[] = [
     id: 'win-A', category: 'atajos-windows', name: 'Centro de configuracion rapida',
     description: 'Abre el Centro de configuración rápida donde se encuentra las opciones de wifi , bluetooth y otras configuraciones.', code: 'Win + A',
     images: [
-      '/public/atajosWin/centro-configuracion-rapida.png',
+      '/atajosWin/centro-configuracion-rapida.png',
     ]
   },
   {
     id: 'win-v', category: 'atajos-windows', name: 'Historial del portapapeles',
     description: 'Pega elementos que copiaste antes.', code: 'Win + V',
     images: [
-      '/public/atajosWin/portapapeles.png',
+      '/atajosWin/portapapeles.png',
     ]
   },
   {
@@ -110,7 +115,7 @@ export const commands: Command[] = [
     id: 'win-x', category: 'atajos-windows', name: 'Menú de herramientas avanzadas',
     description: 'Acceso rápido a Dispositivos, Terminal, Red y más.', code: 'Win + X',
     images: [
-      '/public/atajosWin/menu-herramientas.png',
+      '/atajosWin/menu-herramientas.png',
     ]
   },
   {
@@ -128,70 +133,70 @@ export const commands: Command[] = [
     id: 'exe-msconfig', category: 'win-r', name: 'Configuración del sistema',
     description: 'Controla el arranque, los servicios y las herramientas.', code: 'msconfig',
     images: [
-      '/public/winR/msconfig.png',
-      '/public/winR/msconfig-01.png',
+      '/winR/msconfig.png',
+      '/winR/msconfig-01.png',
     ]
   },
   {
     id: 'exe-services', category: 'win-r', collections: { 'mas-usados': 7 }, name: 'Servicios',
     description: 'Inicia, detiene y configura servicios de Windows.', code: 'services.msc',
     images: [
-      '/public/winR/servicios.png',
+      '/winR/servicios.png',
     ]
   },
   {
     id: 'exe-devmgmt', category: 'win-r', name: 'Administrador de dispositivos',
     description: 'Revisa controladores y dispositivos con errores.', code: 'devmgmt.msc',
     images: [
-      '/public/winR/dispositivos.png',
+      '/winR/dispositivos.png',
     ]
   },
   {
     id: 'exe-eventvwr', category: 'win-r', name: 'Visor de eventos',
     description: 'Consulta los registros para diagnosticar fallos y reinicios.', code: 'eventvwr.msc',
     images: [
-      '/public/winR/visor-eventos.png',
+      '/winR/visor-eventos.png',
     ]
   },
   {
     id: 'exe-appwiz', category: 'win-r', name: 'Programas y características',
     description: 'Desinstala o repara aplicaciones.', code: 'appwiz.cpl',
     images: [
-      '/public/winR/programas.png',
+      '/winR/programas.png',
     ]
   },
   {
     id: 'exe-mstsc', category: 'win-r', name: 'Escritorio remoto',
     description: 'Abre el cliente RDP para conectarte a otro equipo.', code: 'mstsc',
     images: [
-      '/public/winR/escritorio-remoto.png',
+      '/winR/escritorio-remoto.png',
     ]
   },
   {
     id: 'exe-power', category: 'win-r', name: 'Ajustes de plan de energia',
     description: 'Abre el control de ajustes de plan de energia ', code: 'control powercfg.cpl',
     images: [
-      '/public/winR/escritorio-remoto.png',
+      '/winR/escritorio-remoto.png',
     ]
   },
   {
     id: 'pc-winver', category: 'win-r', collections: { 'conocer-tu-pc': 2 }, name: 'Versión de Windows',
     description: 'Muestra la edición y la compilación instalada.', code: 'winver', images: [
-      '/public/winR/winver01.png',
-      '/public/winR/winver02.png',
+      '/winR/winver01.png',
+      '/winR/winver02.png',
     ]
   },
   {
     id: 'pc-msinfo32', category: 'win-r', collections: { 'conocer-tu-pc': 5 }, name: 'Información del sistema',
     description: 'Ficha completa de hardware, drivers y recursos.', code: 'msinfo32', images: [
-      '/public/winR/sisteminfo.png'
+      '/winR/sisteminfo.png'
     ]
   },
   {
     id: 'pc-dxdiag', category: 'win-r', collections: { 'conocer-tu-pc': 8 }, name: 'Tarjeta de video y DirectX',
     description: 'Detalles de la GPU, la pantalla y el sonido.', code: 'dxdiag',
     images: [
-      '/public/winR/tarjeta-video.png'
+      '/winR/tarjeta-video.png'
     ]
   },
   {
@@ -213,7 +218,7 @@ export const commands: Command[] = [
   {
     id: 'pc-systeminfo', category: 'cmd', collections: { 'conocer-tu-pc': 1 }, name: 'Resumen del sistema',
     description: 'Sistema operativo, RAM, último arranque y más.', code: 'systeminfo', images: [
-      '/public/cmd/systeminfo.png',
+      '/cmd/systeminfo.png',
     ]
   },
   {
@@ -269,7 +274,7 @@ export const commands: Command[] = [
     description: 'Servicios activos ordenados por nombre.',
     code: 'Get-Service | Where-Object Status -eq "Running" | Sort-Object Name',
     images: [
-      '/public/powershell/servicios-ejecucion.png',
+      '/powershell/servicios-ejecucion.png',
     ]
   },
   {
@@ -294,7 +299,7 @@ export const commands: Command[] = [
     id: 'pc-serial', category: 'powershell', collections: { 'conocer-tu-pc': 3 }, name: 'Número de serie del equipo',
     description: 'Imprescindible para garantías y tickets con el fabricante.', code: 'Get-CimInstance Win32_BIOS | Select-Object SerialNumber',
     images: [
-      '/public/powershell/NumeroSerieEquipo.png',
+      '/powershell/NumeroSerieEquipo.png',
     ]
   },
   {
@@ -305,7 +310,7 @@ export const commands: Command[] = [
     id: 'pc-disks', category: 'powershell', collections: { 'conocer-tu-pc': 7 }, name: 'Discos y tipo (SSD/HDD)',
     description: 'Modelo, tipo y tamaño de cada disco.', code: 'Get-PhysicalDisk | Select-Object FriendlyName, MediaType, Size',
     images: [
-      '/public/powershell/disco-ssd.png',
+      '/powershell/disco-ssd.png',
     ]
   },
   {
@@ -331,7 +336,7 @@ export const commands: Command[] = [
     id: 'reg-ruta', category: 'regedit', name: 'Carpetas del Usuario',
     description: 'Aquí Windows guarda las ubicaciones reales del Escritorio, Documentos, Descargas e Imágenes', code: 'HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders',
     images: [
-      '/public/regedit/carpetas-rutas.png',
+      '/regedit/carpetas-rutas.png',
     ]
   },
 
@@ -340,7 +345,7 @@ export const commands: Command[] = [
     id: 'git-pull', category: 'git', name: 'Traer los cambios del repositorio remoto',
     description: 'Descarga los cambios del repositorio remoto y los fusiona con tu rama local.', code: 'git pull',
     images: [
-      '/public/git/git-pull.png',
+      '/git/git-pull.png',
     ]
   },
   // web

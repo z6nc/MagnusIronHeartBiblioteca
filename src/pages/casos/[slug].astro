@@ -14,7 +14,13 @@ const { item } = Astro.props as { item: Case };
 const used = (item.commands ?? []).map((id) => commands.find((c) => c.id === id)).filter((c) => !!c);
 const meta = [item.date, ...(item.tags ?? [])].filter(Boolean).join(' · ');
 ---
-<Layout title={item.title} description={item.summary}>
+<Layout
+  title={item.title}
+  description={item.summary}
+  image={item.cover?.src}
+  imageAlt={item.cover?.alt}
+  ogType="article"
+>
   <article class="mx-auto max-w-3xl px-4 pb-20 pt-10 sm:pt-14">
     <a href="/casos" class="inline-block text-sm text-muted transition-colors hover:text-ink">← Casos reales</a>
 

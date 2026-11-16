@@ -71,7 +71,7 @@ export const cases: Case[] = [
         text: "Con la dirección IP y la marca del equipo, ingresé al sitio web oficial para buscar y descargar los controladores correspondientes al modelo exacto de la impresora.",
         images: [
           {
-            src: "/public/Lexmark.png",
+            src: "/Lexmark.png",
             alt: "Sitio web de descarga de controladores",
             caption: "https://support.lexmark.com/es_es/drivers-downloads.html",
           },

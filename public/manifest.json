@@ -1,0 +1,23 @@
+{
+  "name": "MagnusIronHeart | Biblioteca de comandos",
+  "short_name": "MagnusIronHeart",
+  "description": "Biblioteca de comandos, atajos de Windows y soluciones de soporte técnico en español.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#ffcc00",
+  "icons": [
+    {
+      "src": "/Logo192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/Logo512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

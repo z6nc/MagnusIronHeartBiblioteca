@@ -25,7 +25,7 @@ html {
 body {
   @apply min-h-screen overflow-x-hidden bg-bg font-sans text-ink antialiased;
   font-family: "Archivo", sans-serif;
-  padding-bottom: calc(var(--site-header-height, 112px) + 16px);
+  padding-bottom: calc(120px + env(safe-area-inset-bottom));
   background: #050505;
 }
 
@@ -703,19 +703,6 @@ body {
   }
 }
 
-.js .reveal {
-  opacity: 0;
-  transform: translateY(18px);
-  transition:
-    opacity .7s cubic-bezier(.2, .7, .2, 1) calc(var(--i, 0) * 70ms),
-    transform .7s cubic-bezier(.2, .7, .2, 1) calc(var(--i, 0) * 70ms);
-}
-
-.js .reveal.in {
-  opacity: 1;
-  transform: none;
-}
-
 article:target {
   border-color: rgba(255, 204, 0, .55) !important;
   background-color: rgba(255, 204, 0, .07) !important;
@@ -818,8 +805,8 @@ dialog[data-image-viewer] {
 
 @media (max-width: 767px) {
   #site-header ul {
-    flex-wrap: nowrap;
     justify-content: safe center;
+    flex-wrap: nowrap;
     overflow-x: auto;
     scrollbar-width: thin;
   }
@@ -872,6 +859,18 @@ dialog[data-image-viewer] {
   }
 }
 
+@media (min-width: 768px) and (max-width: 1023px) {
+  body {
+    padding-bottom: calc(280px + env(safe-area-inset-bottom));
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1439px) {
+  body {
+    padding-bottom: calc(200px + env(safe-area-inset-bottom));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -885,9 +884,4 @@ dialog[data-image-viewer] {
     animation: none;
   }
 
-  .js .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
 }

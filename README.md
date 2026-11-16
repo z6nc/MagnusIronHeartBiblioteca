@@ -34,6 +34,23 @@ administrador o modifican la configuración del sistema.
 
 El sitio está creado con [Astro](https://astro.build/) y [Tailwind CSS](https://tailwindcss.com/).
 
+## Agregar videos
+
+Añade cada video al arreglo `videos` en `src/data/videos.ts`:
+
+```ts
+{
+  id: "cmd-net-user-video",
+  category: "CMD",
+  name: "Mostrar información de usuario",
+  description: "Muestra información sobre un usuario específico.",
+  url: "https://www.youtube.com/watch?v=ID_DEL_VIDEO",
+  aspectRatio: "16:9",
+}
+```
+
+Usa `aspectRatio: "9:16"` para videos verticales. La miniatura se obtiene de la URL de YouTube; si necesitas una portada distinta, puedes indicar `thumbnail` con su URL. Los videos no se incrustan: la tarjeta abre YouTube y las miniaturas solo se solicitan en la página `/videos`.
+
 <img width="1254" height="1254" alt="logo" src="https://github.com/user-attachments/assets/ff657e12-efb2-4193-a113-c8509f596519" />
 
 

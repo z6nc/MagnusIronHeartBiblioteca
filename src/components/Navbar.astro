@@ -52,16 +52,3 @@ const isActive = (href: string) =>
     }
   </ul>
 </nav>
-
-<script>
-  const header = document.querySelector<HTMLElement>("#site-header");
-
-  if (header) {
-    const updateContentOffset = () => {
-      document.body.style.setProperty("--site-header-height", `${header.offsetHeight}px`);
-    };
-
-    updateContentOffset();
-    new ResizeObserver(updateContentOffset).observe(header);
-  }
-</script>

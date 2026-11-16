@@ -1,16 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import SearchBox from "../components/SearchBox.astro";
-import { getCommandsByCategory } from "../data/commands";
-
-const top = getCommandsByCategory("mas-usados");
-const typedList = JSON.stringify(top.map((c) => c.code));
 ---
 
 <Layout>
   <section
     id="hero"
-    data-hero
     class="relative flex min-h-[calc(100svh-3.5rem)] w-full items-center overflow-hidden"
   >
     <div class="hero-inner reveal relative mx-auto">
@@ -36,7 +31,7 @@ const typedList = JSON.stringify(top.map((c) => c.code));
         >
           <span class="text-accent">$</span>
           <span class="text-ink"> ipconfig /all</span>
-          <span id="typed" class="caret text-ink" data-list={typedList}></span>
+          <span class="caret text-ink"></span>
         </p>
       </div>
       <div
