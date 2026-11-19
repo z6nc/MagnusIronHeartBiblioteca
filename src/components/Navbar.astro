@@ -1,19 +1,40 @@
 ---
 import { categories } from "../data/commands";
 
-const links = [
-  { href: "/", label: "Inicio", hint: "Resumen del sitio" },
-  ...categories.map((category) => ({
-    href: `/${category.slug}`,
-    label: category.nav,
-    hint: category.description,
-  })),
+const homeLink = { href: "/", label: "Inicio", hint: "Resumen del sitio" };
+const casesLink = {
+  href: "/casos",
+  label: "Casos reales",
+  hint: "Problemas resueltos, paso a paso",
+};
+const categoryLinks = categories.map((category) => ({
+  slug: category.slug,
+  href: `/${category.slug}`,
+  label: category.nav,
+  hint: category.description,
+}));
+const categoryGroups = [
   {
-    href: "/casos",
-    label: "Casos reales",
-    hint: "Problemas resueltos, paso a paso",
+    label: "Windows",
+    slugs: ["mas-usados", "conocer-tu-pc", "atajos-windows", "win-r", "regedit", "liberar espacio"],
   },
+  { label: "CLI", slugs: ["cmd", "powershell", "git"] },
+  { label: "Recursos", slugs: ["Web", "videos"] },
+
 ];
+const groups = categoryGroups.map((group) => ({
+  label: group.label,
+  links: [
+    ...categoryLinks.filter((link) => group.slugs.includes(link.slug)),
+    ...(group.label === "Recursos" ? [casesLink] : []),
+  ],
+}));
+const groupedSlugs = new Set(categoryGroups.flatMap((group) => group.slugs));
+const ungroupedLinks = categoryLinks.filter((link) => !groupedSlugs.has(link.slug));
+if (ungroupedLinks.length > 0) {
+  groups.push({ label: "Otras", links: ungroupedLinks });
+}
+
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 const isActive = (href: string) =>
   href === "/" ? path === "/" : path === href || path.startsWith(`${href}/`);
@@ -21,34 +42,96 @@ const isActive = (href: string) =>
 
 <nav id="site-header" class="bg-[#080a0f]" aria-label="Explorar">
   <p class="explore-nav-label">EXPLORAR</p>
-  <ul>
+  <div class="explore-root">
+    <a
+      href={homeLink.href}
+      aria-current={isActive(homeLink.href) ? "page" : undefined}
+      title={homeLink.hint}
+    >
+      <span class="explore-file-icon" aria-hidden="true">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M3.5 6.5h6l2 2h9v10a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z" />
+          <path d="M3.5 9h17" />
+        </svg>
+      </span>
+      <span class="explore-file-label">{homeLink.label}</span>
+    </a>
     {
-      links.map((link) => (
-        <li>
-          <a
-            href={link.href}
-            aria-current={isActive(link.href) ? "page" : undefined}
-            title={link.hint}
+      groups.map((group) => {
+        const activeLink = group.links.find((link) => isActive(link.href));
+        const groupIsActive = Boolean(activeLink);
+        return (
+          <details
+            name="explore-folders"
+            class:list={["explore-folder-group", { "is-active": groupIsActive }]}
           >
-            <span class="explore-file-icon" aria-hidden="true">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.7"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M3.5 6.5h6l2 2h9v10a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z" />
-                <path d="M3.5 9h17" />
-              </svg>
-            </span>
-            <span class="explore-file-label">{link.label}</span>
-          </a>
-        </li>
-      ))
+            <summary
+              aria-label={
+                activeLink
+                  ? `${group.label}, sección actual: ${activeLink.label}`
+                  : group.label
+              }
+              title={activeLink?.label}
+            >
+              <span class="explore-file-icon" aria-hidden="true">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M3.5 6.5h6l2 2h9v10a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z" />
+                  <path d="M3.5 9h17" />
+                </svg>
+              </span>
+              <span class="explore-file-label">{group.label}</span>
+            </summary>
+            <ul class="explore-folder-menu">
+              {
+                group.links.map((link) => (
+                  <li>
+                    <a
+                      href={link.href}
+                      aria-current={isActive(link.href) ? "page" : undefined}
+                      title={link.hint}
+                    >
+                      <span class="explore-file-icon" aria-hidden="true">
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.7"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M3.5 6.5h6l2 2h9v10a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z" />
+                          <path d="M3.5 9h17" />
+                        </svg>
+                      </span>
+                      <span class="explore-file-label">{link.label}</span>
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </details>
+        );
+      })
     }
-  </ul>
+  </div>
 </nav>
