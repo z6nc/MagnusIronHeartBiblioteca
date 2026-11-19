@@ -81,6 +81,11 @@ export const categories: Category[] = [
     heading: 'Videos de *soporte TI*', description: 'Tutoriales y demostraciones para resolver tareas de soporte técnico.',
     icon: '▶', prompt: ''
   },
+  {
+    slug: 'liberar espacio', title: 'Liberar espacio en disco', nav: 'Liberar espacio',
+    heading: 'Liberar espacio en *disco*', description: 'Tutoriales y demostraciones para liberar espacio en disco.',
+    icon: '🗑', prompt: ''
+  },
 ];
 
 export const commands: Command[] = [
@@ -145,12 +150,18 @@ export const commands: Command[] = [
     ]
   },
   {
-    id: 'exe-devmgmt', category: 'win-r', name: 'Administrador de dispositivos',
+    id: 'exe-devmgmt', category: 'win-r', name: 'Administrador de dispositivos y drivers',
     description: 'Revisa controladores y dispositivos con errores.', code: 'devmgmt.msc',
     images: [
       '/winR/dispositivos.png',
     ]
   },
+  {
+    id: 'exe-cleanmgr', category: 'win-r', collections: { 'liberar espacio': 3 }, name: 'Liberador de espacio en disco',
+    description: 'Revisa el espacio en disco y libera espacio innecesario.', code: 'cleanmgr',
+
+  },
+
   {
     id: 'exe-eventvwr', category: 'win-r', name: 'Visor de eventos',
     description: 'Consulta los registros para diagnosticar fallos y reinicios.', code: 'eventvwr.msc',
@@ -266,8 +277,29 @@ export const commands: Command[] = [
     id: 'cmd-net-user', category: 'cmd', name: 'Mostrar información de usuario',
     description: 'Muestra información sobre un usuario específico.', code: 'net user [nombre usuario]'
   },
-
-
+  {
+    id: 'cmd-pnputil-scan-devices',
+    category: 'cmd',
+    name: 'Escanear dispositivos de hardware',
+    description: 'Fuerza un nuevo escaneo de hardware y reintenta detectar/instalar controladores de dispositivos conectados.',
+    code: 'pnputil /scan-devices'
+  },
+  {
+    id: 'cmd-dism-analyze-component-store',
+    category: 'cmd',
+    collections: { 'liberar espacio': 1 },
+    name: 'Analizar el almacén de componentes',
+    description: 'Analiza el tamaño del almacén de componentes (WinSxS) y muestra cuánto espacio ocupan las versiones antiguas de los archivos.',
+    code: 'DISM /Online /Cleanup-Image /AnalyzeComponentStore'
+  },
+  {
+    id: 'cmd-dism-start-component-cleanup',
+    category: 'cmd',
+    collections: { 'liberar espacio': 2 },
+    name: 'Limpiar el almacén de componentes',
+    description: 'Elimina las versiones antiguas de los componentes del sistema para liberar espacio en disco.',
+    code: 'DISM /Online /Cleanup-Image /StartComponentCleanup'
+  },
   // ── PowerShell ─────────────────────────────────────────────
   {
     id: 'ps-get-service', category: 'powershell', name: 'Listar servicios en ejecución',
