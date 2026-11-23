@@ -86,6 +86,39 @@ export const categories: Category[] = [
     heading: 'Liberar espacio en *disco*', description: 'Tutoriales y demostraciones para liberar espacio en disco.',
     icon: '🗑', prompt: ''
   },
+  {
+    slug: 'conectividad-red', title: 'Conectividad de red', nav: 'Conectividad de red',
+    heading: 'Gestionar *conectividad de red*', description: 'comandos para gestionar la conectividad de red.',
+    icon: '🌐', prompt: ''
+  },
+  {
+    slug: 'camara-sonido-microfono', title: 'Cámara, sonido y micrófono', nav: 'Cámara, sonido y micrófono',
+    heading: 'Gestionar *dispositivos de audio y video*', description: 'comandos para gestionar la conectividad de dispositivos de audio y video.',
+    icon: '📹', prompt: ''
+  },
+  {
+    slug: 'ruta-windows', title: 'Ruta de Windows', nav: 'Ruta de Windows',
+    heading: 'Gestionar *la ruta de Windows*', description: ' rutas para configurar  opciones de Windows.',
+    icon: '�', prompt: ''
+  },
+  {
+    slug: 'comandos-linux', title: 'Comandos de Linux', nav: 'Comandos de Linux',
+    heading: 'Gestionar *comandos de Linux*', description: 'comandos para gestionar el sistema operativo Linux.',
+    icon: '🐧', prompt: '$'
+  },
+  {
+    slug: 'bbva', title: 'BBVA', nav: 'BBVA',
+    heading: 'Gestionar *comandos de BBVA*', description: 'comandos para el trabajo correspondiente.',
+    icon: '🏦', prompt: '$'
+  },
+  {
+    slug: 'Romex', title: 'ROMEX', nav: 'Romex',
+    heading: 'Gestionar *comandos de Romex*', description: 'comandos para el trabajo correspondiente.',
+    icon: '🏦', prompt: '$'
+  },
+
+
+
 ];
 
 export const commands: Command[] = [
@@ -160,6 +193,10 @@ export const commands: Command[] = [
     id: 'exe-cleanmgr', category: 'win-r', collections: { 'liberar espacio': 3 }, name: 'Liberador de espacio en disco',
     description: 'Revisa el espacio en disco y libera espacio innecesario.', code: 'cleanmgr',
 
+  },
+  {
+    id: 'exe-ncpa.cpl', category: 'win-r', collections: { 'conectividad-red': 1 }, name: 'Configuración de red',
+    description: 'Administra las configuraciones de red del equipo.', code: 'ncpa.cpl',
   },
 
   {
@@ -241,6 +278,14 @@ export const commands: Command[] = [
     description: 'Configuración completa de cada adaptador de red.', code: 'ipconfig /all'
   },
   {
+    id: 'cmd-ipconfig-release', category: 'cmd', collections: { 'conectividad-red': 3 }, name: 'Liberar IP de un adaptador de red',
+    description: 'Libera la dirección IP asignada a un adaptador de red.', code: 'ipconfig /release '
+  },
+  {
+    id: 'cmd-ipconfig-renew', category: 'cmd', collections: { 'conectividad-red': 4 }, name: 'Renovar IP de un adaptador de red',
+    description: 'Renueva la dirección IP asignada a un adaptador de red.', code: 'ipconfig /renew'
+  },
+  {
     id: 'cmd-nslookup', category: 'cmd', collections: { 'mas-usados': 3 }, name: 'Ver IP de un dominio o host',
     description: 'Muestra la dirección IP asociada a un nombre de dominio o host.', code: 'nslookup'
   },
@@ -253,7 +298,7 @@ export const commands: Command[] = [
     description: 'Muestra información sobre los controladores instalados.', code: 'driverquery'
   },
   {
-    id: 'cmd-flushdns', category: 'cmd', collections: { 'mas-usados': 1 }, name: 'Limpiar caché DNS',
+    id: 'cmd-flushdns', category: 'cmd', collections: { 'conectividad-red': 5 }, name: 'Limpiar caché DNS',
     description: 'Útil cuando un sitio no carga o apunta al servidor viejo.', code: 'ipconfig /flushdns'
   },
 
@@ -299,6 +344,14 @@ export const commands: Command[] = [
     name: 'Limpiar el almacén de componentes',
     description: 'Elimina las versiones antiguas de los componentes del sistema para liberar espacio en disco.',
     code: 'DISM /Online /Cleanup-Image /StartComponentCleanup'
+  },
+  {
+    id: 'cmd-sonido ',
+    category: 'cmd',
+    collections: { 'camara-sonido-microfono': 1 },
+    name: 'Reiniciar audio',
+    description: 'Detiene y reinicia los servicios de audio para resolver problemas de sonido.',
+    code: 'net stop Audiosrv  net stop AudioEndpointBuilder net start AudioEndpointBuilder  net start Audiosrv'
   },
   // ── PowerShell ─────────────────────────────────────────────
   {
@@ -361,7 +414,18 @@ export const commands: Command[] = [
     id: 'pc-events', category: 'powershell', collections: { 'conocer-tu-pc': 8 }, name: 'Eventos del sistema',
     description: 'Muestra los errores del sistema  de un dia del equipo ', code: 'Get-WinEvent -FilterHashtable @{LogName="System"; Level=2; StartTime=(Get-Date).AddDays(-1)}'
   },
-
+  {
+    id: 'pc-red', category: 'powershell', collections: { 'conectividad-red': 2 }, name: 'Conocer Rapidez de red',
+    description: 'Muestra la velocidad de conexión de red.', code: 'Get-NetAdapter | Format-Table Name,Status,LinkSpeed'
+  },
+  {
+    id: 'pc-camara-status', category: 'powershell', collections: { 'Cámara, sonido y micrófono': 5 }, name: 'Listar las camaras y sus status',
+    description: 'Muestra las cámaras disponibles y su estado.', code: 'Get-PnpDevice -Class Camera | Select-Object FriendlyName,Status'
+  },
+  {
+    id: 'pc-auido-status', category: 'powershell', collections: { 'Cámara, sonido y micrófono': 6 }, name: 'Listar las camaras y sus status',
+    description: 'Muestra las cámaras disponibles y su estado.', code: 'Get-PnpDevice -Class Camera | Select-Object FriendlyName,Status'
+  },
 
   // REGEDIT
   {
@@ -370,6 +434,26 @@ export const commands: Command[] = [
     images: [
       '/regedit/carpetas-rutas.png',
     ]
+  },
+  {
+    id: 'reg-copilot', category: 'regedit', name: 'Desactivar Windows Copilot',
+    description: 'Desactiva la función de asistencia de Windows Copilot.', code: 'HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot',
+
+  },
+  {
+    id: 'reg-microsoft', category: 'regedit', name: 'Desactivar Microsoft Store',
+    description: 'Desactiva la tienda de aplicaciones de Microsoft.', code: 'HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\WindowsStore',
+
+  },
+  {
+    id: 'reg-metrica', category: 'regedit', name: 'Desactivar Telemetría de Windows',
+    description: 'Desactiva la telemetría de Windows.', code: 'HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics',
+
+  },
+  {
+    id: 'reg-rendimiento', category: 'regedit', name: 'Mejorar el rendimiento del menú de Windows',
+    description: 'Reducir el tiempo de respuesta del menú de Windows.', code: 'HKEY_CURRENT_USER\Control Panel\Desktop   MenuShowDelay = 100  ',
+
   },
 
   // GIT
@@ -386,6 +470,21 @@ export const commands: Command[] = [
     description: 'Sitio web de soporte para buscar los drivers de impresoras  Lexmark.', code: 'https://support.lexmark.com/es_es/printers.html',
   },
 
+  // rutas windows
+  {
+    id: 'rutas-privacidad ', category: 'ruta-windows', collections: { 'Cámara, sonido y micrófono': 4 }, name: 'Privacidad y seguridad → Cámara / Micrófono',
+    description: 'Sirve para gestionar los permisos de acceso a la cámara y el micrófono.', code: 'Configuración → Privacidad y seguridad → Cámara / Micrófono',
+  },
+
+  //Linux
+  {
+    id: 'linux-pushd ', category: 'comandos-linux', name: 'pushd',
+    description: ' Este comando hace dos cosas a la vez: cambia al directorio que le indicas y guarda el directorio actual en la pila.', code: 'pushd <directorio>',
+  },
+  {
+    id: 'linux-pushd ', category: 'comandos-linux', name: 'pushd',
+    description: ' Este comando hace dos cosas a la vez: cambia al directorio que le indicas y guarda el directorio actual en la pila.', code: 'pushd <directorio>',
+  },
 
 
 
