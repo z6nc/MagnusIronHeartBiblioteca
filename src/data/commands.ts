@@ -248,7 +248,7 @@ export const commands: Command[] = [
     ]
   },
   {
-    id: 'pc-mmsys', category: 'win-r', name: 'Propiedades de sonido y pantalla',
+    id: 'pc-mmsys', category: 'win-r', collections: { 'camara-sonido-microfono': 2 }, name: 'Propiedades de sonido y pantalla',
     description: 'Configura las opciones de audio y visualización.', code: 'mmsys.cpl',
   },
   {
@@ -419,12 +419,12 @@ export const commands: Command[] = [
     description: 'Muestra la velocidad de conexión de red.', code: 'Get-NetAdapter | Format-Table Name,Status,LinkSpeed'
   },
   {
-    id: 'pc-camara-status', category: 'powershell', collections: { 'Cámara, sonido y micrófono': 5 }, name: 'Listar las camaras y sus status',
+    id: 'pc-camara-status', category: 'powershell', collections: { 'camara-sonido-microfono': 3 }, name: 'Listar las camaras y sus status',
     description: 'Muestra las cámaras disponibles y su estado.', code: 'Get-PnpDevice -Class Camera | Select-Object FriendlyName,Status'
   },
   {
-    id: 'pc-auido-status', category: 'powershell', collections: { 'Cámara, sonido y micrófono': 6 }, name: 'Listar las camaras y sus status',
-    description: 'Muestra las cámaras disponibles y su estado.', code: 'Get-PnpDevice -Class Camera | Select-Object FriendlyName,Status'
+    id: 'pc-auido-status', category: 'powershell', collections: { 'camara-sonido-microfono': 4 }, name: 'Listar las sonidos y sus status',
+    description: 'Muestra las fuentes de audio disponibles y su estado.', code: 'Get-PnpDevice -Class AudioEndpoint | Select-Object FriendlyName,Status'
   },
 
   // REGEDIT
@@ -472,7 +472,7 @@ export const commands: Command[] = [
 
   // rutas windows
   {
-    id: 'rutas-privacidad ', category: 'ruta-windows', collections: { 'Cámara, sonido y micrófono': 4 }, name: 'Privacidad y seguridad → Cámara / Micrófono',
+    id: 'rutas-privacidad ', category: 'ruta-windows', collections: { 'camara-sonido-microfono': 5 }, name: 'Privacidad y seguridad → Cámara / Micrófono',
     description: 'Sirve para gestionar los permisos de acceso a la cámara y el micrófono.', code: 'Configuración → Privacidad y seguridad → Cámara / Micrófono',
   },
 
@@ -482,9 +482,30 @@ export const commands: Command[] = [
     description: ' Este comando hace dos cosas a la vez: cambia al directorio que le indicas y guarda el directorio actual en la pila.', code: 'pushd <directorio>',
   },
   {
-    id: 'linux-pushd ', category: 'comandos-linux', name: 'pushd',
-    description: ' Este comando hace dos cosas a la vez: cambia al directorio que le indicas y guarda el directorio actual en la pila.', code: 'pushd <directorio>',
+    id: 'linux-popd ', category: 'comandos-linux', name: 'popd',
+    description: 'Retorna al directorio anterior en la pila.', code: 'popd',
   },
+  {
+    id: 'linux-grep-search ', category: 'comandos-linux', name: 'Buscaar texto en archivos linux grep',
+    description: 'Busca texto en archivos y te muestra la línea donde se encuentra.', code: 'grep -n "texto_a_buscar" archivo.txt',
+  },
+  {
+    id: 'linux-vim-search ', category: 'comandos-linux', name: 'Posiciona el cursor en la línea deseada en vim',
+    description: 'Sirve para posicionar le cursor rápidamente en la linea.', code: 'vim +[n] archivo.txt',
+  },
+  {
+    id: 'linux-vim-wq ', category: 'comandos-linux', name: 'Guardar cambios en vim',
+    description: 'Sirve para guardar los cambios y salir de vim.', code: ':wq!',
+  },
+  {
+    id: 'linux-vim-q ', category: 'comandos-linux', name: 'Salir de vim sin guardar',
+    description: 'Sirve para salir de vim sin guardar los cambios.', code: ':q!',
+  },
+
+  {
+    id: 'linux-ls-F ', category: 'comandos-linux', name: 'Listar archivos avanzado en linux',
+    description: 'Muestra la lista de archivos y directorios en el directorio actual con simbolos para conocer cual es file o directorios.', code: 'ls -LF',
+  }
 
 
 
