@@ -3,6 +3,7 @@
 //  - category: 'atajos-windows' | 'win-r' | 'cmd' | 'powershell'
 //  - collections: (opcional) lo suma a una colección con su orden,
 //      ej. { 'mas-usados': 1 } o { 'conocer-tu-pc': 3 }
+//  - code: un texto o un array de textos; cada elemento del array se copia por separado.
 //  - youtube: (opcional) URL del video; si falta, abre una búsqueda.
 //  - images: (opcional) URLs de una o varias imágenes que muestran el comando.
 // Para agregar una categoría: añade un objeto a `categories`.
@@ -24,7 +25,7 @@ export interface Command {
   category: string;
   name: string;
   description: string;
-  code: string;
+  code: string | string[];
   images?: string[];
   youtube?: string;
   collections?: Record<string, number>;
@@ -107,13 +108,13 @@ export const categories: Category[] = [
     icon: '🐧', prompt: '$'
   },
   {
-    slug: 'bbva', title: 'BBVA', nav: 'BBVA',
-    heading: 'Gestionar *comandos de BBVA*', description: 'comandos para el trabajo correspondiente.',
+    slug: 'bp', title: 'bp', nav: 'bp',
+    heading: 'Gestionar *comandos de bp*', description: 'comandos para el trabajo correspondiente.',
     icon: '🏦', prompt: '$'
   },
   {
-    slug: 'Romex', title: 'ROMEX', nav: 'Romex',
-    heading: 'Gestionar *comandos de Romex*', description: 'comandos para el trabajo correspondiente.',
+    slug: 'rx', title: 'rx', nav: 'rx',
+    heading: 'Gestionar *comandos de rx*', description: 'comandos para el trabajo correspondiente.',
     icon: '🏦', prompt: '$'
   },
 
@@ -353,6 +354,7 @@ export const commands: Command[] = [
     description: 'Detiene y reinicia los servicios de audio para resolver problemas de sonido.',
     code: 'net stop Audiosrv  net stop AudioEndpointBuilder net start AudioEndpointBuilder  net start Audiosrv'
   },
+
   // ── PowerShell ─────────────────────────────────────────────
   {
     id: 'ps-get-service', category: 'powershell', name: 'Listar servicios en ejecución',
@@ -505,8 +507,39 @@ export const commands: Command[] = [
   {
     id: 'linux-ls-F ', category: 'comandos-linux', name: 'Listar archivos avanzado en linux',
     description: 'Muestra la lista de archivos y directorios en el directorio actual con simbolos para conocer cual es file o directorios.', code: 'ls -LF',
-  }
+  },
 
+  // Banco
+  {
+    id: 'bp-bat-winhostname ', category: 'bp', name: 'Batcher para activar Na',
+    description: 'Script para activar el servicio de Nacar en Windows.', code: 'C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp',
+  },
+  {
+    id: 'bp-ip-lexmark', category: 'bp', name: 'Ver las ip de impresoras L cloud ',
+    description: 'Comando para ver las ip de impresoras l cloud', code: ['cd /root/bin', 'cat /tmp/win_hostname_user.txt', 'cat /var/lib/lexmark/win_hostname_user.txt'],
+  },
+  {
+    id: 'bp-ip', category: 'bp', name: 'No se que es',
+    description: 'Comando para ver no se que', code: '\\pwaplexmark',
+  },
+  {
+    id: 'bp-nacar', category: 'bp', name: 'Reiniciar servicios de perifericos',
+    description: 'Reiniciar servicios de perifericos', code: ['systemctl restart slapd.service', 'systemctl restart jxfsdevicestarter.service', 'systemctl restart jfserver.service', 'sincronizar.sh'],
+  },
+  {
+    id: 'bp-sessiones ',
+    category: 'bp',
+    name: 'Cerrar sessiones Pegadas',
+    description: 'Cierra las sessiones de usuario que se encuentran pegadas en el servidor.',
+    code: ['query session /server:[IP_O_NOMBRE]', 'logoff [ID] /server:[IP_O_NOMBRE]']
+  },
+  {
+    id: 'bp-podio ',
+    category: 'bp',
+    name: 'ESTRUCTURA DE PODIO',
+    description: 'Estructura de podio.',
+    code: 'W10WAV[COD OF]1'
+  },
 
 
 ];
