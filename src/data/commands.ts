@@ -509,7 +509,7 @@ export const commands: Command[] = [
     description: 'Muestra la lista de archivos y directorios en el directorio actual con simbolos para conocer cual es file o directorios.', code: 'ls -LF',
   },
 
-  // Banco
+  // B
   {
     id: 'bp-bat-winhostname ', category: 'bp', name: 'Batcher para activar Na',
     description: 'Script para activar el servicio de Nacar en Windows.', code: 'C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp',
